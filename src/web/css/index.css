@@ -1,0 +1,16 @@
+#content-holder {
+    font-family:sans-serif; width: 500px; margin-left: auto;
+    margin-right: auto; text-align: center; padding: 100px;
+}
+
+#textbox-input {
+    border-radius: 6px; border-width: thin; outline: 0; font-size: 18pt;
+    border:0; padding: 10px; transition: all 0.5s;
+}
+#textbox-input:focus { background-color: #E6F2FF; }
+
+#button-send { border-style: solid; border-left: 0; border-right: 0;
+    font-size: 20pt; cursor: pointer; transition: all 0.5s;
+}
+
+#button-send:hover { transform: scale(1.2); }
