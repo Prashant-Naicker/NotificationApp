@@ -3,15 +3,15 @@
 // that contains what was written in the textbox.
 
 $(document).ready(function () {
-    var Button = $("#button-send");
+    var button = $("#button-send");
 
-    Button.click( function() { performNotification(); });
+    Button.click(function () { performNotification(); });
 });
 
 function performNotification() {
-    var Textbox = $("#textbox-input");
+    var textbox = $("#textbox-input");
 
-    $.post("localhost:8080", { notification : Textbox.val()}, function () {
+    $.post("http://localhost:8080/notification", { notification : Textbox.val() }, function () {
         alert("Notification Sent");
     });
 }
