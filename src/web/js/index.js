@@ -4,4 +4,14 @@
 
 $(document).ready(function () {
     var Button = $("#button-send");
+
+    Button.click( function() { performNotification(); });
 });
+
+function performNotification() {
+    var Textbox = $("#textbox-input");
+
+    $.post("localhost:8080", { notification : Textbox.val()}, function () {
+        alert("Notification Sent");
+    });
+}

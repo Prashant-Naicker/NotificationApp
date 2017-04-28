@@ -10,7 +10,7 @@
 #textbox-input:focus { background-color: #E6F2FF; }
 
 #button-send { border-style: solid; border-left: 0; border-right: 0;
-    font-size: 20pt; cursor: pointer; transition: all 0.5s;
+    font-size: 20pt; cursor: pointer; transition: all 0.5s; 
 }
 
 #button-send:hover { transform: scale(1.2); }
