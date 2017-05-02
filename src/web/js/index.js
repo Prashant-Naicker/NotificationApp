@@ -5,13 +5,13 @@
 $(document).ready(function () {
     var button = $("#button-send");
 
-    Button.click(function () { performNotification(); });
+    button.click(function () { performNotification(); });
 });
 
 function performNotification() {
     var textbox = $("#textbox-input");
 
-    $.post("http://localhost:8080/notification", { notification : Textbox.val() }, function () {
+    $.post("http://localhost:8080/send-message", { message : textbox.val() }, function () {
         alert("Notification Sent");
     });
 }

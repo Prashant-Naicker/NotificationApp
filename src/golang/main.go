@@ -2,20 +2,43 @@ package main
 
 import (
     "net/http"
+    "io/ioutil"
+    "encoding/json"
+    "log"
 )
 
+type Message struct { Message string `json:"message"` }
+
 func main() {
-    http.HandleFunc("/notification", resp)
+    http.HandleFunc("/send-message", message)
+    http.HandleFunc("/send-notification", notification)
     http.ListenAndServe(":8080", nil)
 }
 
-func resp(w http.ResponseWriter, req *http.Request) {
+func message(w http.ResponseWriter, r *http.Request) {
     SetGeneralHeaders(w)
-    if req.Method == "OPTIONS" {
+    if r.Method == "OPTIONS" {
         w.WriteHeader(http.StatusOK)
         w.Write([]byte(""))
         return
     }
+
+    message := Message{}
+
+    defer r.Body.Close()
+    body, err := ioutil.ReadAll(r.Body)
+    if err != nil { return }
+
+    err = json.Unmarshal(body, &message)
+    if err != nil { return }
+
+    log.Printf("this is the message: %#v", message)
+    return
+
+}
+
+func notification(w http.ResponseWriter, r *http.Request) {
+    SetGeneralHeaders(w)
 
 }
 
