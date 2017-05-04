@@ -3,15 +3,29 @@
 // that contains what was written in the textbox.
 
 $(document).ready(function () {
-    var button = $("#button-send");
+    button = $("#button-send");
+    textbox = $("#textbox-input");
 
     button.click(function () { performNotification(); });
 });
 
 function performNotification() {
-    var textbox = $("#textbox-input");
+    var req = new API("send-message");
 
-    $.post("http://localhost:8080/send-message", { message : textbox.val() }, function () {
-        alert("Notification Sent");
+    var reqObj = {
+        message: textbox.val()
+    };
+
+    req.setRequestObject(reqObj);
+    req.setResponseHandler(function (err, resObj) {
+
+        if (err) {
+            alert("There was an error");
+            return;
+        }
+
+        alert("Yes");
     });
+    req.send()
+
 }

@@ -2,9 +2,9 @@ package main
 
 import (
     "net/http"
-    "io/ioutil"
-    "encoding/json"
-    "log"
+    //"io/ioutil"
+    //"encoding/json"
+    //"log"
 )
 
 type Message struct { Message string `json:"message"` }
@@ -22,7 +22,13 @@ func message(w http.ResponseWriter, r *http.Request) {
         w.Write([]byte(""))
         return
     }
+    w.WriteHeader(0)
+    //message := Message{"Hello"}
 
+    //b, err := json.Marshal(message)
+    //if err != nil { return }
+
+/*
     message := Message{}
 
     defer r.Body.Close()
@@ -31,8 +37,7 @@ func message(w http.ResponseWriter, r *http.Request) {
 
     err = json.Unmarshal(body, &message)
     if err != nil { return }
-
-    log.Printf("this is the message: %#v", message)
+*/
     return
 
 }
