@@ -20,11 +20,11 @@ function performNotification() {
     req.setResponseHandler(function (err, resObj) {
 
         if (err) {
-            alert("There was an error");
+            alert(JSON.stringify(err));
             return;
         }
 
-        alert("Yes");
+        alert(resObj.message);
     });
     req.send()
 

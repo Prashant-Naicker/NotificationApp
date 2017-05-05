@@ -2,8 +2,8 @@ package main
 
 import (
     "net/http"
-    //"io/ioutil"
-    //"encoding/json"
+    "io/ioutil"
+    "encoding/json"
     //"log"
 )
 
@@ -22,24 +22,24 @@ func message(w http.ResponseWriter, r *http.Request) {
         w.Write([]byte(""))
         return
     }
-    w.WriteHeader(0)
-    //message := Message{"Hello"}
 
-    //b, err := json.Marshal(message)
-    //if err != nil { return }
-
-/*
     message := Message{}
 
+    //Reading request body.
     defer r.Body.Close()
     body, err := ioutil.ReadAll(r.Body)
     if err != nil { return }
 
+    //Unmarshalling the JSON object and storing it in the Message struct.
     err = json.Unmarshal(body, &message)
     if err != nil { return }
-*/
-    return
 
+    //Marshalling the message and writing it to the response.
+    b, err := json.Marshal(message)
+    if err != nil { return }
+    w.Write(b);
+
+    return
 }
 
 func notification(w http.ResponseWriter, r *http.Request) {
