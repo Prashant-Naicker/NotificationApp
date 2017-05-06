@@ -26,6 +26,5 @@ function performNotification() {
 
         alert(resObj.message);
     });
-    req.send()
-
+    req.send();
 }

@@ -4,6 +4,7 @@ import (
     "net/http"
     "io/ioutil"
     "encoding/json"
+    "fmt"
 )
 
 type Message struct { Message string `json:"message"` }
@@ -29,15 +30,23 @@ func message(w http.ResponseWriter, r *http.Request) {
     //Reading request body.
     defer r.Body.Close()
     body, err := ioutil.ReadAll(r.Body)
-    if err != nil { return }
+    if err != nil {
+        return
+        fmt.Println(err)
+    }
 
     //Unmarshalling the JSON object and storing it in the Message struct.
     err = json.Unmarshal(body, &message)
-    if err != nil { return }
+    if err != nil {
+        return
+        fmt.Println(err)
+    }
 
     storage = append(storage, message)
 
-    w.Write("Message has been recorded.")
+    fmt.Println(storage)
+
+    w.Write([]byte(`{"message": "Message has been recorded."}`))
 
     return
 }
