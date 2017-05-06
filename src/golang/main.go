@@ -4,10 +4,11 @@ import (
     "net/http"
     "io/ioutil"
     "encoding/json"
-    //"log"
 )
 
 type Message struct { Message string `json:"message"` }
+
+var storage = []Message{}
 
 func main() {
     http.HandleFunc("/send-message", message)
@@ -34,10 +35,9 @@ func message(w http.ResponseWriter, r *http.Request) {
     err = json.Unmarshal(body, &message)
     if err != nil { return }
 
-    //Marshalling the message and writing it to the response.
-    b, err := json.Marshal(message)
-    if err != nil { return }
-    w.Write(b);
+    storage = append(storage, message)
+
+    w.Write("Message has been recorded.")
 
     return
 }
