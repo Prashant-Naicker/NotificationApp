@@ -43,7 +43,6 @@ func message(w http.ResponseWriter, r *http.Request) {
     }
 
     storage = append(storage, message)
-
     fmt.Println(storage)
 
     w.Write([]byte(`{"message": "Message has been recorded."}`))
