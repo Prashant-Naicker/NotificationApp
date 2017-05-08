@@ -53,9 +53,16 @@ func message(w http.ResponseWriter, r *http.Request) {
 
 func notification(w http.ResponseWriter, r *http.Request) {
     SetGeneralHeaders(w)
+    fmt.Println(storage)
 
     fmt.Println("Notification Request Made")
-    w.Write([]byte(`{"message": "Message has been recorded."}`))
+
+    b, err := json.Marshal(storage)
+    if err != nil { return }
+
+    storage = []Message{}
+    fmt.Println(storage)
+    w.Write(b)
 
 }
 

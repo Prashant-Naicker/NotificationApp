@@ -10,6 +10,7 @@ import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -22,7 +23,7 @@ import java.nio.charset.StandardCharsets;
 public abstract class API {
     private final static String API_URL_STRING = "http://192.168.1.2:8080/send-notification";
 
-    private JSONObject _reqObj;
+    private JSONArray _reqObj;
     private Activity _activity;
 
     // Constructor.
@@ -31,10 +32,10 @@ public abstract class API {
     }
 
     // Request/Response.
-    public void setRequestObject(JSONObject reqObj) {
+    public void setRequestObject(JSONArray reqObj) {
         _reqObj = reqObj;
     }
-    private void raiseResponse(final Exception ex, final JSONObject resObj) {
+    private void raiseResponse(final Exception ex, final JSONArray resObj) {
         _activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -42,7 +43,7 @@ public abstract class API {
             }
         });
     }
-    public abstract void onResponseCallback(Exception ex, JSONObject resObj);
+    public abstract void onResponseCallback(Exception ex, JSONArray resObj);
 
     // Send.
     public void send() {
@@ -79,7 +80,7 @@ public abstract class API {
                 resObjStr += line;
             }
 
-            raiseResponse(null, new JSONObject(resObjStr));
+            raiseResponse(null, new JSONArray(resObjStr));
         } catch (Exception ex) {
             raiseResponse(ex, null);
         }
