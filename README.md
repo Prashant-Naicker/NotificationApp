@@ -1,3 +1,5 @@
+############### ON GOING #################
+
 # NotificationApp
 
 **Message Sender - Javascript** - Uses AJAX to send an HTTP POST request to the web server that contains the notification message.
