@@ -40,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         req.setRequestObject(reqObj);
-        Log.e("Yes","Lol");
         req.send();
     }
 
