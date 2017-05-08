@@ -2,17 +2,17 @@ package com.example.prashant.notificationapp;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
     Button button;
     TextView textView;
-    String server = "http://192.168.1.2/notification";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,15 +24,32 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-
-                RequestQueue rq = Volley.newRequestQueue(MainActivity.this);
-
-
+                request();
             }
         });
     }
 
-    public void sendRequest(View view) {
+    // API.
+    private void request() {
+        JSONObject reqObj = new JSONObject();
 
+        API req = new API(MainActivity.this) {
+            @Override
+            public void onResponseCallback(Exception ex, JSONObject resObj) {
+                responseHandler(ex, resObj);
+            }
+        };
+        req.setRequestObject(reqObj);
+        Log.e("Yes","Lol");
+        req.send();
+    }
+
+    private void responseHandler(Exception ex, JSONObject resObj) {
+        if (ex != null) {
+            textView.setText("Error");
+            return;
+        }
+
+        textView.setText("Success");
     }
 }

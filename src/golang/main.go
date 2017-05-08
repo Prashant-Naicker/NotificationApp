@@ -24,6 +24,7 @@ func message(w http.ResponseWriter, r *http.Request) {
         w.Write([]byte(""))
         return
     }
+    fmt.Println("Message Request Made")
 
     message := Message{}
 
@@ -52,6 +53,9 @@ func message(w http.ResponseWriter, r *http.Request) {
 
 func notification(w http.ResponseWriter, r *http.Request) {
     SetGeneralHeaders(w)
+
+    fmt.Println("Notification Request Made")
+    w.Write([]byte(`{"message": "Message has been recorded."}`))
 
 }
 
