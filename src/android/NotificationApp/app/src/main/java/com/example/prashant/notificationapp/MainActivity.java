@@ -17,6 +17,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Date;
+
 public class MainActivity extends AppCompatActivity {
     Button button;
     TextView textView;
@@ -60,13 +62,17 @@ public class MainActivity extends AppCompatActivity {
         textView.setText("Success");
 
         try {
-            showNotification(resObj.getJSONObject(0).getString("message"));
+            for (int i = 0; i < resObj.length(); i++) {
+                showNotification(resObj.getJSONObject(i).getString("message"), i);
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
-    public void showNotification(String text) {
+    public void showNotification(String text, int id) {
+        int m = (int) ((new Date().getTime() / 1000L) % Integer.MAX_VALUE);
+
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
 
         builder.setSmallIcon(R.mipmap.ic_launcher);
@@ -81,10 +87,10 @@ public class MainActivity extends AppCompatActivity {
         stackBuilder.addParentStack(MainActivity.class);
         stackBuilder.addNextIntent(intent);
 
-        PendingIntent pendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = stackBuilder.getPendingIntent(id, PendingIntent.FLAG_UPDATE_CURRENT);
         builder.setContentIntent(pendingIntent);
 
         NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        nm.notify(0, builder.build());
+        nm.notify(id, builder.build());
     }
 }
