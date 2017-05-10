@@ -4,6 +4,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Vibrator;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Date;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
     Button button;
@@ -54,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void responseHandler(Exception ex, JSONArray resObj) {
+        Random r = new Random();
+
         if (ex != null) {
             textView.setText("Error");
             return;
@@ -63,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
         try {
             for (int i = 0; i < resObj.length(); i++) {
-                showNotification(resObj.getJSONObject(i).getString("message"), i);
+                showNotification(resObj.getJSONObject(i).getString("message"), r.nextInt(500 - 1) + 1);
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -71,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showNotification(String text, int id) {
-        int m = (int) ((new Date().getTime() / 1000L) % Integer.MAX_VALUE);
+        Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
 
@@ -91,6 +95,8 @@ public class MainActivity extends AppCompatActivity {
         builder.setContentIntent(pendingIntent);
 
         NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
         nm.notify(id, builder.build());
+        v.vibrate(500);
     }
 }

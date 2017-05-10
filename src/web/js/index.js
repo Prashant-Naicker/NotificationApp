@@ -25,6 +25,7 @@ function performNotification() {
         }
 
         alert(resObj.message);
+        textbox.val("");
     });
     req.send();
 }
