@@ -23,7 +23,7 @@ import java.nio.charset.StandardCharsets;
 public abstract class API {
     private final static String API_URL_STRING = "http://192.168.1.2:8080/send-notification";
 
-    private JSONArray _reqObj;
+    private JSONObject _reqObj;
     private Activity _activity;
 
     // Constructor.
@@ -32,7 +32,7 @@ public abstract class API {
     }
 
     // Request/Response.
-    public void setRequestObject(JSONArray reqObj) {
+    public void setRequestObject(JSONObject reqObj) {
         _reqObj = reqObj;
     }
     private void raiseResponse(final Exception ex, final JSONArray resObj) {
@@ -82,6 +82,7 @@ public abstract class API {
 
             raiseResponse(null, new JSONArray(resObjStr));
         } catch (Exception ex) {
+            Log.e("lol", "err", ex);
             raiseResponse(ex, null);
         }
     }

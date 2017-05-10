@@ -1,9 +1,13 @@
 package com.example.prashant.notificationapp;
 
-import android.content.DialogInterface;
-import android.support.v7.app.AlertDialog;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -34,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
     // API.
     private void request() {
-        JSONArray reqObj = new JSONArray();
+        JSONObject reqObj = new JSONObject();
 
         API req = new API(MainActivity.this) {
 
@@ -53,12 +57,34 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        for (int i = 0; i < resObj.length(); i++) {
-            try {
-                textView.setText(resObj.getJSONObject(i).getString("message"));
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+        textView.setText("Success");
+
+        try {
+            showNotification(resObj.getJSONObject(0).getString("message"));
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
+    }
+
+    public void showNotification(String text) {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+
+        builder.setSmallIcon(R.mipmap.ic_launcher);
+        builder.setContentTitle(text);
+        builder.setContentText("");
+        builder.setAutoCancel(true);
+
+        Intent intent = new Intent(this, MainActivity.class);
+
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+
+        stackBuilder.addParentStack(MainActivity.class);
+        stackBuilder.addNextIntent(intent);
+
+        PendingIntent pendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+        builder.setContentIntent(pendingIntent);
+
+        NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        nm.notify(0, builder.build());
     }
 }
