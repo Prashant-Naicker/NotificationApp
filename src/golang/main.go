@@ -7,14 +7,20 @@ import (
     "fmt"
 )
 
-type Message struct { Message string `json:"message"` }
+type Message struct {
+    Message string `json:"message"`
+}
 
 var storage = []Message{}
 
 func main() {
     http.HandleFunc("/send-message", message)
     http.HandleFunc("/send-notification", notification)
-    http.ListenAndServe(":8080", nil)
+    err := http.ListenAndServe(":8080", nil)
+    if err != nil {
+        fmt.Println(err)
+        return
+    }
 }
 
 func message(w http.ResponseWriter, r *http.Request) {
@@ -32,15 +38,15 @@ func message(w http.ResponseWriter, r *http.Request) {
     defer r.Body.Close()
     body, err := ioutil.ReadAll(r.Body)
     if err != nil {
-        return
         fmt.Println(err)
+        return
     }
 
     //Unmarshalling the JSON object and storing it in the Message struct.
     err = json.Unmarshal(body, &message)
     if err != nil {
-        return
         fmt.Println(err)
+        return
     }
 
     storage = append(storage, message)
@@ -63,7 +69,6 @@ func notification(w http.ResponseWriter, r *http.Request) {
     storage = []Message{}
     fmt.Println(storage)
     w.Write(b)
-
 }
 
 func SetGeneralHeaders(w http.ResponseWriter) {

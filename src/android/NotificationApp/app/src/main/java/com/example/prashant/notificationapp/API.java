@@ -82,7 +82,6 @@ public abstract class API {
 
             raiseResponse(null, new JSONArray(resObjStr));
         } catch (Exception ex) {
-            Log.e("lol", "err", ex);
             raiseResponse(ex, null);
         }
     }

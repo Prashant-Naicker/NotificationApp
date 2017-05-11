@@ -2,6 +2,9 @@
 // Will make the button. when clicked send an HTTP POST request to my webserver
 // that contains what was written in the textbox.
 
+var button;
+var textbox;
+
 $(document).ready(function () {
     button = $("#button-send");
     textbox = $("#textbox-input");

@@ -24,6 +24,7 @@ import java.util.Random;
 public class MainActivity extends AppCompatActivity {
     Button button;
     TextView textView;
+    static int id = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void responseHandler(Exception ex, JSONArray resObj) {
-        Random r = new Random();
 
         if (ex != null) {
             textView.setText("Error");
@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
         try {
             for (int i = 0; i < resObj.length(); i++) {
-                showNotification(resObj.getJSONObject(i).getString("message"), r.nextInt(500 - 1) + 1);
+                showNotification(resObj.getJSONObject(i).getString("message"), id++);
             }
         } catch (JSONException e) {
             e.printStackTrace();
