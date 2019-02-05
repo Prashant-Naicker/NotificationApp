@@ -1,5 +1,3 @@
-############### COMPLETE #################
-
 # NotificationApp
 
 At the end of this project, you will be able to send a message from your web browser and receive it as a notification on your android phone. Languages used: Go, Javascript, Java
